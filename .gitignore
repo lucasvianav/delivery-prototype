@@ -1,5 +1,6 @@
 ecommerce-prototype/
 ecommerce-prototype/*
+yarn.lock
 
 # Logs
 logs
