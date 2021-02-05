@@ -55,6 +55,10 @@ const feeSchema = mongoose.Schema({
 })
 
 const orderSchema = mongoose.Schema({
+    number: {
+        type: Number,
+        required: true
+    },
     products: {
         type: [productSchema],
         required: true

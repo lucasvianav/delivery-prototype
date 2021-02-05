@@ -13,12 +13,19 @@ const productsController = {
 
         return product ? res.json(product).status(200) : res.json().status(404)
     },
-
+    
     checkExistence: async (req, res) => {
         const {_id} = req.params
         const existence = await productsService.checkExistence(_id)
         
         return res.json(existence)
+    },
+    
+    create: async (req, res) => {
+        const {product} = req.body
+        const newProduct = await productsService.create(product)
+        
+        return newProduct ? res.json(newProduct).status(200) : res.json().status(400)
     },
 
     update: async (req, res) => {
@@ -30,13 +37,9 @@ const productsController = {
 
     delete: async (req, res) => {
         const {_id} = req.params
+        result = await productsService.delete(_id) 
         
-        try{ 
-            await productsService.delete(_id) 
-            return res.status(200).json(true)
-        }
-
-        catch{ return res.status(404).json(false) }
+        return result ? res.status(200).json(true) : res.status(404).json(false)
     }
 }
 

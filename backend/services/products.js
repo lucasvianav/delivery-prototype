@@ -5,14 +5,26 @@ const productsService = {
 
     findById: async (_id) => await Products.findById(_id),
 
-    checkExistence: async (_id) => Boolean(await Products.findById(_id)),
+    checkExistence: async (_id) => await Products.exists({_id}),
+
+    create: async (product) => {
+        delete product._id
+        return await Products.create(product)
+    },
 
     update: async (_id, updates) => {
         delete updates._id
-        await Products.findByIdAndUpdate(_id, updates)
+        return await Products.findByIdAndUpdate(_id, updates, options = { new: true })
     },
 
-    delete: async (_id) => Products.findByIdAndDelete(_id)
+    delete: async (_id) => {
+        try{ 
+            await Products.findByIdAndDelete(_id) 
+            return true
+        }
+
+        catch{ return false }
+    }
 }
 
 module.exports = productsService
